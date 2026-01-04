@@ -6,10 +6,10 @@ class SharedTripContext:
         self.data: Dict = {
 
             # BASIC TRIP DETAILS
-            "source_place": "Ahmedabad",
-            "source_airport": "AMD",
-            "destination_place": "Shimla",
-            "destination_airport": "SLV",
+            "source_place": "Mumbai",
+            "source_airport": "BOM",
+            "destination_place": "Rishikesh",
+            "destination_airport": "DED",
 
             "outbound_date": "2026-01-05",  # YYYY-MM-DD
             "return_date": "2026-01-08",           # YYYY-MM-DD
@@ -36,6 +36,7 @@ class SharedTripContext:
 
             "flight_options": [],          # Raw flights from SerpAPI
             "recommended_flights": [],     # Top 3 by Flight Agent
+            "flight_booking_redirect_url": None,
 
             "hotel_options": [],           # Raw hotels from SerpAPI
             "recommended_hotels": [],      # Top hotels by Hotel Agent
