@@ -27,12 +27,7 @@ def main():
 
     # 5️⃣ Run crew
     result = crew.kickoff()
-
-    # 6️⃣ Update shared context (IMPORTANT)
-    shared_context.update("weather_info", result)
-
     print("\n✅ WEATHER AGENT OUTPUT:\n", result)
-    print("\n📦 UPDATED SHARED CONTEXT:\n", shared_context.get_all())
 
 
 if __name__ == "__main__":
