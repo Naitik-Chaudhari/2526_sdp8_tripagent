@@ -6,12 +6,12 @@ def create_weather_agent():
     return Agent(
         role="Weather Expert",
         goal=(
-            "Analyze weather conditions and provide travel-friendly insights "
-            "for trip planning."
+            "Analyze weather conditions and provide structured, "
+            "travel-friendly insights for itinerary planning."
         ),
         backstory=(
-            "You are a travel meteorologist who helps travelers "
-            "decide activities based on weather."
+            "You are a professional travel meteorologist who converts "
+            "raw weather data into actionable travel insights."
         ),
         tools=[get_weather],
         llm=get_groq_llm(),

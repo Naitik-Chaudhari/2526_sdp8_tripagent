@@ -6,19 +6,22 @@ class SharedTripContext:
         self.data: Dict = {
 
             # BASIC TRIP DETAILS
-            "source_place": "Mumbai",
-            "source_airport": "BOM",
-            "destination_place": "Rishikesh",
-            "destination_airport": "DED",
+            "source_place": "Ahmedabad",
+            "source_airport": "AMD",
+            "destination_place": "Goa",
+            "destination_airport": "GOI",
 
-            "outbound_date": "2026-01-05",  # YYYY-MM-DD
-            "return_date": "2026-01-08",           # YYYY-MM-DD
+            "outbound_date": "2026-01-09",  # YYYY-MM-DD
+            "return_date": "2026-01-11",           # YYYY-MM-DD
             "trip_duration_days": None,
+            "flight_sort_by": 1,
 
             # TRAVEL PREFERENCES
-            "travel_class": "Economy",     # Economy / Business
-            "num_adults": 1,
+            "travel_class": 1,     # Economy / Business
+            "num_adults": 2,
             "num_children": 0,
+            "hotel_sort_by": 8,
+            "hotel_class": None,        # 3-star, 4-star, 5-star
 
             "budget_total": None,          # INR
             "budget_flight": None,
@@ -31,22 +34,24 @@ class SharedTripContext:
                 # "budget"
             ],
 
-            # AGENT OUTPUTS
-            "weather_info": None,
+            # # AGENT OUTPUTS
+            # "weather_info": None,
 
-            "flight_options": [],          # Raw flights from SerpAPI
-            "recommended_flights": [],     # Top 3 by Flight Agent
-            "flight_booking_redirect_url": None,
+            # "flight_options": [],          # Raw flights from SerpAPI
+            # "recommended_flights": [],     # Top 3 by Flight Agent
+            # "flight_booking_redirect_url": None,
 
-            "hotel_options": [],           # Raw hotels from SerpAPI
-            "recommended_hotels": [],      # Top hotels by Hotel Agent
+            # "hotel_options": [],           # Raw hotels from SerpAPI
+            # "recommended_hotels": [],      # Top hotels by Hotel Agent
+            "check_in_date": "2026-01-09",
+            "check_out_date": "2026-01-11",
 
-            "local_attractions": [],       # From Local Guide Agent
+            # "local_attractions": [],       # From Local Guide Agent
 
-            # FINAL OUTPUT
-            # =====================
-            "final_itinerary": None,
-            "estimated_total_cost": None
+            # # FINAL OUTPUT
+            # # =====================
+            # "final_itinerary": None,
+            # "estimated_total_cost": None
         }
 
     # ---------------------

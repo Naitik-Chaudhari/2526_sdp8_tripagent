@@ -17,11 +17,7 @@ def main():
 
     result = crew.kickoff()
 
-    # Update shared context
-    shared_context.update("flight_options", result)
-
     print("\n✈️ FLIGHT AGENT RESULT:\n", result)
-    print("\n📦 UPDATED CONTEXT:\n", shared_context.get("flight_options"))
 
 if __name__ == "__main__":
     main()
