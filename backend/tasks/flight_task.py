@@ -43,14 +43,13 @@ def create_flight_task(flight_agent, shared_context):
             "      \"travel_class\": \"\",\n"
             "      \"aircrafts\": [],\n"
             "      \"carbon_emissions_kg\": 0,\n"
-            "      \"booking_token\": \"\"\n"
             "    }\n"
             "  ]\n"
             "}\n\n"
 
             "Rules:\n"
             "- Use ONLY data from the tool output\n"
-            "- Include only BEST flights\n"
+            "- Return ONLY top 5 best flights\n"
             "- Convert carbon emissions to kg\n"
             "- No markdown, no explanations"
         ),

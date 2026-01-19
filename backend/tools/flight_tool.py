@@ -69,8 +69,7 @@ def search_flights(
                 }
                 for leg in legs
             ],
-            "carbon_emissions": itinerary.get("carbon_emissions"),
-            "booking_token": itinerary.get("departure_token")
+            "carbon_emissions": itinerary.get("carbon_emissions")
         })
 
     return {

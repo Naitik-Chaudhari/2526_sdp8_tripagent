@@ -11,8 +11,8 @@ class SharedTripContext:
             "destination_place": "Goa",
             "destination_airport": "GOI",
 
-            "outbound_date": "2026-01-09",  # YYYY-MM-DD
-            "return_date": "2026-01-11",           # YYYY-MM-DD
+            "outbound_date": "YYYY-MM-DD",  # YYYY-MM-DD
+            "return_date": "YYYY-MM-DD",           # YYYY-MM-DD
             "trip_duration_days": None,
             "flight_sort_by": 1,
 
@@ -34,17 +34,8 @@ class SharedTripContext:
                 # "budget"
             ],
 
-            # # AGENT OUTPUTS
-            # "weather_info": None,
-
-            # "flight_options": [],          # Raw flights from SerpAPI
-            # "recommended_flights": [],     # Top 3 by Flight Agent
-            # "flight_booking_redirect_url": None,
-
-            # "hotel_options": [],           # Raw hotels from SerpAPI
-            # "recommended_hotels": [],      # Top hotels by Hotel Agent
-            "check_in_date": "2026-01-09",
-            "check_out_date": "2026-01-11",
+            "check_in_date": "2026-01-26",
+            "check_out_date": "2026-01-28",
 
             # "local_attractions": [],       # From Local Guide Agent
 
