@@ -8,59 +8,53 @@ load_dotenv()
 @tool("search_local_places")
 def search_local_places(location: str, preferences: list):
     """
-    Fetch attractions using SerpAPI Google Local Results.
-    Always return VALID JSON with: name, rating, reviews, address, type,
-    thumbnail, google_maps_link (fallback if missing).
+    Fetch local attractions per preference using SerpAPI.
+    Ensures EACH preference returns relevant places.
     """
 
     api_key = os.getenv("SERPAPI_API_KEY")
     if not api_key:
         return {"error": "SERPAPI_API_KEY missing"}
 
-    # Build query from preferences
-    query = ", ".join(preferences) if preferences else "tourist attractions"
+    final_results = []
+    seen = set()
 
-    params = {
-        "engine": "google_local",
-        "q": f"{query} in {location}",
-        "hl": "en",
-        "api_key": api_key,
-    }
+    for pref in preferences:
+        params = {
+            "engine": "google_local",
+            "q": f"{pref} in {location}",
+            "hl": "en",
+            "gl": "in",
+            "api_key": api_key
+        }
 
-    try:
         response = requests.get("https://serpapi.com/search", params=params)
         response.raise_for_status()
         data = response.json()
 
-        places = data.get("local_results", [])
-        cleaned = []
+        for place in data.get("local_results", [])[:5]:  # limit per preference
+            name = place.get("title")
+            if not name or name in seen:
+                continue
 
-        for p in places:
-
-            # ----------- Extract links (priority order) -----------
             maps_link = (
-                p.get("link") or
-                p.get("gps_coordinates", {}).get("google_maps_url") or
-                p.get("links", {}).get("google_maps")
+                place.get("link")
+                or place.get("links", {}).get("google_maps")
             )
 
-            # ----------- If ALL links missing → Auto generate one -----------
             if not maps_link:
-                name = p.get("title", "").replace(" ", "+")
-                city = location.replace(" ", "+")
-                maps_link = f"https://www.google.com/maps/search/{name}+{city}"
+                maps_link = (
+                    f"https://www.google.com/maps/search/"
+                    f"{name.replace(' ', '+')}+{location.replace(' ', '+')}"
+                )
 
-            cleaned.append({
-                "name": p.get("title"),
-                "rating": p.get("rating"),
-                "reviews": p.get("reviews"),
-                "address": p.get("address"),
-                "type": p.get("type"),
-                "thumbnail": p.get("thumbnail"),
+            final_results.append({
+                "name": name,
+                "rating": place.get("rating"),
+                "type": place.get("type") or pref,
                 "google_maps_link": maps_link
             })
 
-        return {"results": cleaned}
+            seen.add(name)
 
-    except Exception as e:
-        return {"error": str(e)}
+    return {"places": final_results}

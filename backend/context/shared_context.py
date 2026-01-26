@@ -11,8 +11,8 @@ class SharedTripContext:
             "destination_place": "Goa",
             "destination_airport": "GOI",
 
-            "outbound_date": "YYYY-MM-DD",  # YYYY-MM-DD
-            "return_date": "YYYY-MM-DD",           # YYYY-MM-DD
+            "outbound_date": "2026-01-27",  # YYYY-MM-DD
+            "return_date": "2026-01-30",           # YYYY-MM-DD
             "trip_duration_days": None,
             "flight_sort_by": 1,
 
@@ -28,14 +28,21 @@ class SharedTripContext:
             "budget_hotel": None,
 
             "preferences": [
-                # "beach",
-                # "luxury",
-                # "nightlife",
-                # "budget"
+                "beach",
+                "nightlife",
+                "local cuisine",
+                "water sports",
+                "cultural experiences"
             ],
 
-            "check_in_date": "2026-01-26",
-            "check_out_date": "2026-01-28",
+            "check_in_date": "2026-01-27",
+            "check_out_date": "2026-01-29",
+
+            "flight_results": None,      # From Flight Agent
+            "hotel_results": None,       # From Hotel Agent
+            "weather_results": None,     # From Weather Agent
+            "places_results": None,      # From Local Guide Agent
+
 
             # "local_attractions": [],       # From Local Guide Agent
 
