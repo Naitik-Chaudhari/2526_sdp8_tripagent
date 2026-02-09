@@ -3,6 +3,7 @@ import { Routes, Route, useLocation } from 'react-router-dom'
 import Navbar from './components/common/Navbar'
 import Home from './pages/Home'
 import Search from './pages/Search'
+import Results from './pages/Results'
 import NotFound from './pages/NotFound'
 import HowItWorks from './pages/HowItWorks'
 import Login from './pages/Login'
@@ -36,6 +37,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/results" element={<Results />} />
           <Route path="/how-it-works" element={<HowItWorks />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />

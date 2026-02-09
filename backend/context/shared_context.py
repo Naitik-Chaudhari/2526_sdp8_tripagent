@@ -1,69 +1,72 @@
-from typing import Dict, List, Optional
+from typing import Dict
 
 
 class SharedTripContext:
-    def __init__(self):
+    def __init__(self, initial_data: Dict | None = None):
+        # ======================
+        # DEFAULT CONTEXT VALUES
+        # ======================
         self.data: Dict = {
 
             # BASIC TRIP DETAILS
             "source_place": "Ahmedabad",
             "source_airport": "AMD",
-            "destination_place": "Goa",
-            "destination_airport": "GOI",
+            "destination_place": "Jaipur",
+            "destination_airport": "JAI",
 
-            "outbound_date": "2026-01-27",  # YYYY-MM-DD
-            "return_date": "2026-01-30",           # YYYY-MM-DD
+            "outbound_date": "2026-02-10",
+            "return_date": "2026-02-13",
             "trip_duration_days": None,
             "flight_sort_by": 1,
 
             # TRAVEL PREFERENCES
-            "travel_class": 1,     # Economy / Business
+            "travel_class": 1,
             "num_adults": 2,
             "num_children": 0,
             "hotel_sort_by": 8,
-            "hotel_class": None,        # 3-star, 4-star, 5-star
+            "hotel_class": None,
 
-            "budget_total": None,          # INR
+            "budget_total": None,
             "budget_flight": None,
             "budget_hotel": None,
 
-            "preferences": [
-                "beach",
-                "nightlife",
-                "local cuisine",
-                "water sports",
-                "cultural experiences"
-            ],
+            "preferences": None,
 
-            "check_in_date": "2026-01-27",
-            "check_out_date": "2026-01-29",
+            "check_in_date": None,
+            "check_out_date": None,
 
-            "flight_results": None,      # From Flight Agent
-            "hotel_results": None,       # From Hotel Agent
-            "weather_results": None,     # From Weather Agent
-            "places_results": None,      # From Local Guide Agent
+            # ======================
+            # AGENT OUTPUTS
+            # ======================
+            "flight_results": None,
+            "hotel_results": None,
+            "weather_results": None,
+            "places_results": None,
+            "itinerary_result": None,
 
+            "destination_zones": None,
+            "zone_day_mapping": None,
+            "category_catalog": None,
+            "trip_days_breakdown": None,
+            "user_summary": None
 
-            # "local_attractions": [],       # From Local Guide Agent
-
-            # # FINAL OUTPUT
-            # # =====================
-            # "final_itinerary": None,
-            # "estimated_total_cost": None
         }
 
+        # ======================
+        # APPLY API INPUT SAFELY
+        # ======================
+        if initial_data:
+            for key, value in initial_data.items():
+                if key in self.data:
+                    self.data[key] = value
+
     # ---------------------
-    # Context helpers
+    # CONTEXT HELPERS
     # ---------------------
     def update(self, key: str, value):
         if key not in self.data:
             raise KeyError(f"Invalid context key: {key}")
         self.data[key] = value
-
-    def append(self, key: str, value):
-        if not isinstance(self.data.get(key), list):
-            raise TypeError(f"{key} is not a list")
-        self.data[key].append(value)
 
     def get(self, key: str):
         return self.data.get(key)
