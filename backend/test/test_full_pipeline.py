@@ -9,7 +9,8 @@ from backend.agents.flight_agent import create_flight_agent
 from backend.agents.hotel_agent import create_hotel_agent
 from backend.agents.weather_agent import create_weather_agent
 from backend.agents.local_guide_agent import create_local_guide_agent
-from backend.agents.itinerary_agent import create_itinerary_agent
+from backend.agents.itinerary_agent import create_day_planner_agent
+from backend.agents.destination_structure_agent import destination_structure_agent
 
 # ======================
 # TASKS
@@ -18,7 +19,8 @@ from backend.tasks.flight_task import create_flight_task
 from backend.tasks.hotel_task import create_hotel_task
 from backend.tasks.weather_task import create_weather_task
 from backend.tasks.task_local_guide import create_local_guide_task
-from backend.tasks.itinerary_task import create_itinerary_task
+from backend.tasks.itinerary_task import create_day_planner_task
+from backend.tasks.destination_structure_task import destination_structure_task
 
 
 # ======================
@@ -74,11 +76,24 @@ def run_local_guide_agent(ctx):
 
 def run_itinerary_agent(ctx):
     print("\n🧠 RUNNING ITINERARY AGENT\n")
-    agent = create_itinerary_agent()
-    task = create_itinerary_task(agent, ctx)
+    agent = create_day_planner_agent()
+    task = create_day_planner_task(agent, ctx)
     result = run_agent(agent, task)
     structured_result = json.loads(result.raw)
     ctx.update("itinerary_result", structured_result)
+
+
+def run_destination_structure_agent(ctx):
+    print("\n🗺 RUNNING DESTINATION STRUCTURE AGENT\n")
+    agent = destination_structure_agent()
+    task = destination_structure_task(agent, ctx)
+    result = run_agent(agent, task)
+    structured_result = json.loads(result.raw)
+    ctx.update("trip_duration_days", structured_result["trip_duration_days"])
+    ctx.update("planning_days", structured_result["planning_days"])
+    ctx.update("arrival_day_zone", structured_result["arrival_day_zone"])
+    ctx.update("destination_zones", structured_result["zones"])
+    ctx.update("zone_day_mapping", structured_result["day_zone_strategy"])
     
 
 

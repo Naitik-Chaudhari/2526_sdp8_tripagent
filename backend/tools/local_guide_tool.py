@@ -6,33 +6,41 @@ from crewai.tools import tool
 load_dotenv()
 
 @tool("search_local_places")
-def search_local_places(location: str, preferences: list):
+def search_local_places(destination: str, zone_name: str, categories: list, limit: int):
     """
-    Fetch local attractions per preference using SerpAPI.
-    Ensures EACH preference returns relevant places.
+    Fetch local attractions per zone for multiple categories.
+    Retrieves up to 'limit' places per category.
     """
+
+    limit = min(limit, 2)
 
     api_key = os.getenv("SERPAPI_API_KEY")
     if not api_key:
         return {"error": "SERPAPI_API_KEY missing"}
 
-    final_results = []
-    seen = set()
+    zone_results = {}
 
-    for pref in preferences:
+    for category in categories:
         params = {
             "engine": "google_local",
-            "q": f"{pref} in {location}",
+            "q": f"{category} in {zone_name}, {destination}",
             "hl": "en",
             "gl": "in",
             "api_key": api_key
         }
 
-        response = requests.get("https://serpapi.com/search", params=params)
-        response.raise_for_status()
-        data = response.json()
+        try:
+            response = requests.get("https://serpapi.com/search", params=params)
+            response.raise_for_status()
+            data = response.json()
+        except Exception as e:
+            zone_results[category] = {"error": str(e)}
+            continue
 
-        for place in data.get("local_results", [])[:5]:  # limit per preference
+        results = []
+        seen = set()
+
+        for place in data.get("local_results", [])[:limit]:
             name = place.get("title")
             if not name or name in seen:
                 continue
@@ -45,16 +53,21 @@ def search_local_places(location: str, preferences: list):
             if not maps_link:
                 maps_link = (
                     f"https://www.google.com/maps/search/"
-                    f"{name.replace(' ', '+')}+{location.replace(' ', '+')}"
+                    f"{name.replace(' ', '+')}+{zone_name.replace(' ', '+')}"
                 )
 
-            final_results.append({
+            results.append({
                 "name": name,
                 "rating": place.get("rating"),
-                "type": place.get("type") or pref,
+                "type": category,
                 "google_maps_link": maps_link
             })
 
             seen.add(name)
 
-    return {"places": final_results}
+        zone_results[category] = results
+
+    return {
+        "zone": zone_name,
+        "categories": zone_results
+    }

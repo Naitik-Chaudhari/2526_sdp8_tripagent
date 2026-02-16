@@ -11,7 +11,7 @@ def get_groq_llm():
     llm = LLM(
         model="groq/llama-3.3-70b-versatile",
         temperature=0.3,
-        max_tokens=1024
+        max_tokens=8192
     )
 
 

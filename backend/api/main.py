@@ -1,11 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from backend.api.schemas import TripRequest
-from backend.api.trip_discover import TripDiscoverRequest
-from backend.api.trip_discover_response import TripDiscoverResponse
-from backend.context.shared_context import SharedTripContext
-from backend.test.destination_structure_runner import run_destination_structure_agent
-from backend.services.trip_pipeline import run_full_trip_pipeline
+from backend.api.schemas import TripPlanRequest, TripDiscoverRequest
+from backend.services.trip_pipeline import run_plan_trip, run_discover_trip
+from backend.services.add_arrival_day import add_arrival_day
 
 app = FastAPI(
     title="AI Trip Planner API",
@@ -33,15 +30,13 @@ def root():
 
 
 @app.post("/plan-trip")
-def plan_trip(request: TripRequest):
-    ctx = run_full_trip_pipeline(request.dict())
-    return {
-        "status": "success",
-        "itinerary": ctx.get("itinerary_result"),
-        "references": {
-            "flights": ctx.get("flight_results"),
-            "hotels": ctx.get("hotel_results"),
-            "weather": ctx.get("weather_results"),
-            "places": ctx.get("places_results")
-        }
-    }
+def plan_trip(request: TripPlanRequest):
+    request.day_zone_strategy = add_arrival_day(request.day_zone_strategy, request.arrival_day_zone)
+
+    return run_plan_trip(request)
+
+
+@app.post("/trip/discover")
+def discover_trip(request: TripDiscoverRequest):
+
+    return run_discover_trip(request)

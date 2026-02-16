@@ -1,13 +1,13 @@
 from crewai import Crew
 from backend.context.shared_context import SharedTripContext
-from backend.agents.itinerary_agent import create_itinerary_agent
-from backend.tasks.itinerary_task import create_itinerary_task
+from backend.agents.itinerary_agent import create_day_planner_agent
+from backend.tasks.itinerary_task import create_day_planner_task
 
 def main():
     ctx = SharedTripContext()
 
-    itinerary_agent = create_itinerary_agent()
-    itinerary_task = create_itinerary_task(itinerary_agent, ctx)
+    itinerary_agent = create_day_planner_agent()
+    itinerary_task = create_day_planner_task(itinerary_agent, ctx)
 
     crew = Crew(
         agents=[itinerary_agent],

@@ -9,15 +9,17 @@ class SharedTripContext:
         self.data: Dict = {
 
             # BASIC TRIP DETAILS
-            "source_place": "Ahmedabad",
-            "source_airport": "AMD",
-            "destination_place": "Jaipur",
-            "destination_airport": "JAI",
+            "source_place": None,
+            "source_airport": None,
+            "destination_place": None,
+            "destination_airport": None,
 
-            "outbound_date": "2026-02-10",
-            "return_date": "2026-02-13",
+            "outbound_date": None,
+            "return_date": None,
             "trip_duration_days": None,
             "flight_sort_by": 1,
+            "planning_days": None,
+            "arrival_day_zone": None,
 
             # TRAVEL PREFERENCES
             "travel_class": 1,
@@ -43,12 +45,10 @@ class SharedTripContext:
             "weather_results": None,
             "places_results": None,
             "itinerary_result": None,
-
             "destination_zones": None,
             "zone_day_mapping": None,
-            "category_catalog": None,
             "trip_days_breakdown": None,
-            "user_summary": None
+            "user_summary": None,
 
         }
 

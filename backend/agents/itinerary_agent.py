@@ -1,19 +1,19 @@
 from crewai import Agent
 from backend.llm.groq_llm import get_groq_llm
 
-def create_itinerary_agent():
+def create_day_planner_agent():
     return Agent(
-        role="Trip Itinerary Planner AI",
+        role="Day Wise Travel Planner AI",
 
         goal=(
-            "Select the best flight and hotel and create a realistic, time-aware, "
-            "weather-optimized day-by-day travel itinerary using ONLY provided agent data."
+            "Create a realistic, weather-aware, zone-based daily itinerary "
+            "using ONLY the provided structured data."
         ),
 
         backstory=(
-            "You are an elite travel consultant who plans trips exactly how humans do. "
-            "You consider arrival times, energy levels, weather suitability, and location flow. "
-            "You never invent places and never schedule unrealistic activities."
+            "You are a professional human-style travel planner. "
+            "You follow zone flow strictly, respect energy levels, "
+            "consider weather suitability, and never invent locations."
         ),
 
         llm=get_groq_llm(),
