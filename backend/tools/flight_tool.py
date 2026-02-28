@@ -18,7 +18,7 @@ def search_flights(
 ):
     """
     Fetch flight data using SerpAPI (Google Flights)
-    and return a compact, structured list of flight options.
+    and return structured list of both best and other flight options.
     NOTE: Prices returned are PER ADULT.
     """
 
@@ -47,30 +47,38 @@ def search_flights(
 
     flights = []
 
-    for itinerary in data.get("best_flights", []):
-        legs = itinerary.get("flights", [])
-        layovers = itinerary.get("layovers", [])
+    def extract_flights(flight_list, category):
+        for itinerary in flight_list:
+            legs = itinerary.get("flights", [])
+            layovers = itinerary.get("layovers", [])
 
-        flights.append({
-            "airline": legs[0].get("airline") if legs else None,
-            "route": f"{origin} → {destination}",
-            "price_per_adult": itinerary.get("price"),
-            "currency": "INR",
-            "total_duration_min": itinerary.get("total_duration"),
-            "stops": len(layovers),
-            "legs": [
-                {
-                    "from": leg["departure_airport"]["id"],
-                    "to": leg["arrival_airport"]["id"],
-                    "departure_time": leg["departure_airport"]["time"],
-                    "arrival_time": leg["arrival_airport"]["time"],
-                    "flight_number": leg.get("flight_number"),
-                    "aircraft": leg.get("airplane")
-                }
-                for leg in legs
-            ],
-            "carbon_emissions": itinerary.get("carbon_emissions")
-        })
+            flights.append({
+                "category": category,
+                "airline": legs[0].get("airline") if legs else None,
+                "route": f"{origin} → {destination}",
+                "price_per_adult": itinerary.get("price"),
+                "currency": "INR",
+                "total_duration_min": itinerary.get("total_duration"),
+                "stops": len(layovers),
+                "legs": [
+                    {
+                        "from": leg["departure_airport"]["id"],
+                        "to": leg["arrival_airport"]["id"],
+                        "departure_time": leg["departure_airport"]["time"],
+                        "arrival_time": leg["arrival_airport"]["time"],
+                        "flight_number": leg.get("flight_number"),
+                        "aircraft": leg.get("airplane")
+                    }
+                    for leg in legs
+                ],
+                "carbon_emissions": itinerary.get("carbon_emissions")
+            })
+
+    # Add best flights
+    extract_flights(data.get("best_flights", []), "best")
+
+    # Add other flights
+    extract_flights(data.get("other_flights", []), "other")
 
     return {
         "search_summary": {
@@ -80,9 +88,11 @@ def search_flights(
             "return_date": return_date,
             "adults": adults,
             "children": children,
-            "travel_class": travel_class
+            "travel_class": travel_class,
+            "sort_by": sort_by
         },
         "google_flights_url": data.get("search_metadata", {}).get("google_flights_url"),
         "prettify_html_file": data.get("search_metadata", {}).get("prettify_html_file"),
+        "total_results": len(flights),
         "flights": flights
     }

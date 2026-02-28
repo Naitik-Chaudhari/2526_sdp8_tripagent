@@ -21,38 +21,36 @@ def create_flight_task(flight_agent, shared_context):
             "Search flights using the following input:\n"
             f"{flight_input}\n\n"
 
-            "Use the flight search tool and return ONLY a structured JSON "
-            "in the following format (no extra text):\n\n"
+            "Use the flight search tool and return ONLY structured JSON.\n\n"
+
+            "Return the result in EXACT format below:\n\n"
 
             "{\n"
             "  \"search_links\": {\n"
             "    \"google_flights_url\": \"<url>\",\n"
             "    \"prettify_html_file\": \"<url>\"\n"
             "  },\n"
-            "  \"best_flights\": [\n"
-            "    {\n"
-            "      \"airline\": \"\",\n"
-            "      \"flight_numbers\": [],\n"
-            "      \"route\": \"\",\n"
-            "      \"departure_time\": \"\",\n"
-            "      \"arrival_time\": \"\",\n"
-            "      \"total_duration_min\": 0,\n"
-            "      \"stops\": 0,\n"
-            "      \"layover_airports\": [],\n"
-            "      \"price_inr\": 0,\n"
-            "      \"travel_class\": \"\",\n"
-            "      \"aircrafts\": [],\n"
-            "      \"carbon_emissions_kg\": 0,\n"
-            "    }\n"
-            "  ]\n"
+            "  \"best_flights\": [ ... top 5 ... ],\n"
+            "  \"recommended_flight\": { ... }\n"
             "}\n\n"
 
+            "Selection Logic for recommended_flight:\n"
+            "- Evaluate ALL flights using a balanced multi-factor assessment.\n"
+            "- Consider price, total duration, number of stops, carbon emissions, "
+            "and presence of overnight layovers simultaneously.\n"
+            "- Determine which flight provides the best overall trade-off.\n"
+            "- Do NOT apply sequential filtering or tie-breaking rules.\n"
+            "- recommended_flight MUST be one of the 5 returned flights.\n\n"
+
             "Rules:\n"
-            "- Use ONLY data from the tool output\n"
+            "- Use ONLY tool output\n"
             "- Return ONLY top 5 best flights\n"
             "- Convert carbon emissions to kg\n"
-            "- No markdown, no explanations"
+            "- No markdown\n"
+            "- No explanations\n"
+            "- Return pure JSON only"
         ),
-        expected_output="Structured JSON flight search result",
+        expected_output="Structured JSON with multi-factor recommended flight",
         agent=flight_agent
     )
+
