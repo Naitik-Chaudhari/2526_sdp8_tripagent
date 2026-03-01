@@ -63,3 +63,27 @@ class FlightSearchRequest(BaseModel):
             raise ValueError("return_date must be after start_date")
         return self
 
+
+
+class HotelSearchRequest(BaseModel):
+    destination_place: str = Field(..., example="Goa")
+
+    checkin_date: date = Field(..., example="2026-01-27")
+    checkout_date: date = Field(..., example="2026-01-30")
+
+    num_adults: int = Field(..., ge=1, example=2)
+    num_children: int = Field(0, ge=0, example=1)
+
+    hotel_sort_by: Literal[3, 8, 13] = Field(
+        3,
+        description="3=Lowest Price, 8=Highest Rating, 13=Most Reviewed",
+        example=3
+    )
+
+    @model_validator(mode="after")
+    def validate_dates(self):
+        if self.checkout_date <= self.checkin_date:
+            raise ValueError("checkout_date must be after checkin_date")
+        return self
+
+

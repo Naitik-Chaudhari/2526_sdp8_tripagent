@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from backend.api.schemas import TripPlanRequest, TripDiscoverRequest, FlightSearchRequest
-from backend.services.trip_pipeline import run_plan_trip, run_discover_trip, run_flight_search
+from backend.api.schemas import TripPlanRequest, TripDiscoverRequest, FlightSearchRequest, HotelSearchRequest
+from backend.services.trip_pipeline import run_plan_trip, run_discover_trip, run_flight_search, run_hotel_search
 from backend.services.add_arrival_day import add_arrival_day
 
 app = FastAPI(
@@ -46,3 +46,10 @@ def discover_trip(request: TripDiscoverRequest):
 def search_flight(request: FlightSearchRequest):
 
     return run_flight_search(request)
+
+
+@app.post("/hotel/search")
+def search_hotel(request: HotelSearchRequest):
+    
+    return run_hotel_search(request)
+

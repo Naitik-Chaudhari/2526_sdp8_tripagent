@@ -8,6 +8,7 @@ from backend.test.test_full_pipeline import (
     run_itinerary_agent,
     run_destination_structure_agent,
     run_flight_agent,
+    run_hotel_agent,
 )
 
 
@@ -98,4 +99,28 @@ def run_flight_search(input_data: dict):
         "travel_class": ctx.get("travel_class"),
         "flight_sort_by": ctx.get("flight_sort_by"),
         "flight_results": ctx.get("flight_results")
+    }
+
+
+def run_hotel_search(input_data: dict):
+    context_data = {
+        "destination_place": input_data.destination_place,
+        "check_in_date": input_data.checkin_date.isoformat(),
+        "check_out_date": input_data.checkout_date.isoformat(),
+        "num_adults": input_data.num_adults,
+        "num_children": input_data.num_children,
+        "hotel_sort_by": input_data.hotel_sort_by,
+    }
+
+    ctx = SharedTripContext(initial_data=context_data)
+    run_hotel_agent(ctx)
+
+    return{
+        "destination_place": ctx.get("destination_place"),
+        "checkin_date": ctx.get("check_in_date"),
+        "checkout_date": ctx.get("check_out_date"),
+        "num_adults": ctx.get("num_adults"),
+        "num_children": ctx.get("num_children"),
+        "hotel_sort_by": ctx.get("hotel_sort_by"),
+        "hotel_results": ctx.get("hotel_results")
     }
