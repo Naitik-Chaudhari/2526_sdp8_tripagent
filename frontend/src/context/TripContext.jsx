@@ -1,27 +1,38 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState } from "react";
 
-const TripContext = createContext()
+const TripContext = createContext();
 
-export function TripProvider({ children }) {
-  const [tripData, setTripData] = useState(null)
-  const [isLoading, setIsLoading] = useState(false)
-
-  const updateTripData = (data) => {
-    setTripData(data)
-  }
+export const TripProvider = ({ children }) => {
+  const [discoverData, setDiscoverData] = useState(null);
+  const [tripPlan, setTripPlan] = useState(null);
+  const [tripId, setTripId] = useState(null);
+  const [flightResults, setFlightResults] = useState(null);
+  const [flightSearchData, setFlightSearchData] = useState(null);
+  const [hotelSearchData, setHotelSearchData] = useState(null);
+  const [hotelResults, setHotelResults] = useState(null);
 
   return (
     <TripContext.Provider
       value={{
-        tripData,
-        updateTripData,
-        isLoading,
-        setIsLoading,
+        discoverData,
+        setDiscoverData,
+        tripPlan,
+        setTripPlan,
+        tripId,
+        setTripId,
+        flightSearchData,
+        setFlightSearchData,
+        flightResults,
+        setFlightResults,
+        hotelSearchData,
+        setHotelSearchData,
+        hotelResults,
+        setHotelResults
       }}
     >
       {children}
     </TripContext.Provider>
-  )
-}
+  );
+};
 
-export const useTripContext = () => useContext(TripContext)
+export const useTrip = () => useContext(TripContext);

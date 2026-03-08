@@ -4,12 +4,17 @@ import { SignedIn, SignedOut, RedirectToSignIn } from "@clerk/clerk-react";
 import Navbar from "./components/common/Navbar";
 import AuthSync from "./components/common/AuthSync";
 import Home from "./pages/Home";
-import Search from "./pages/Search";
-import Results from "./pages/Results";
 import NotFound from "./pages/NotFound";
 import HowItWorks from "./pages/HowItWorks";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import DiscoverForm from "./pages/DiscoverForm";
+import DiscoverResult from "./pages/DiscoverResult";
+import TripPlan from "./pages/TripPlan";
+import FlightSearchForm from "./pages/FlightSearchForm";
+import FlightResults from "./pages/FlightResults";
+import HotelSearchForm from "./pages/HotelSearchForm";
+import HotelResults from "./pages/HotelResults";
 
 function App() {
   const location = useLocation();
@@ -39,7 +44,7 @@ function App() {
       )}
       {/* Ensure Clerk user is synced to backend when signed in */}
       <AuthSync />
-      <main>
+      <main className="pt-20 px-6">
         <Routes>
           {/* Public routes */}
           <Route path="/" element={<Home />} />
@@ -47,13 +52,12 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
 
-          {/* Protected routes: redirect to sign in if signed out */}
           <Route
-            path="/search"
+            path="/discover"
             element={
               <>
                 <SignedIn>
-                  <Search />
+                  <DiscoverForm />
                 </SignedIn>
                 <SignedOut>
                   <RedirectToSignIn />
@@ -61,12 +65,13 @@ function App() {
               </>
             }
           />
+
           <Route
-            path="/results"
+            path="/discover-result"
             element={
               <>
                 <SignedIn>
-                  <Results />
+                  <DiscoverResult />
                 </SignedIn>
                 <SignedOut>
                   <RedirectToSignIn />
@@ -74,6 +79,25 @@ function App() {
               </>
             }
           />
+
+          <Route
+            path="/plan-trip"
+            element={
+              <>
+                <SignedIn>
+                  <TripPlan />
+                </SignedIn>
+                <SignedOut>
+                  <RedirectToSignIn />
+                </SignedOut>
+              </>
+            }
+          />
+
+          <Route path="/flight-search" element={<FlightSearchForm />} />
+          <Route path="/flight-results" element={<FlightResults />} />
+          <Route path="/hotel-results" element={<HotelResults />} />
+          <Route path="/hotel-search" element={<HotelSearchForm />} />
 
           {/* Fallback */}
           <Route path="*" element={<NotFound />} />
