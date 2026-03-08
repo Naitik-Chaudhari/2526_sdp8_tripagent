@@ -23,7 +23,7 @@ function Navbar({ darkMode, toggleDarkMode }) {
 
   const navLinks = [
     { path: "/", label: "Home", icon: Home },
-    { path: "/search", label: "Plan Trip", icon: Search },
+    { path: "/discover", label: "Plan Trip", icon: Search },
     { path: "/how-it-works", label: "How It Works", icon: null },
   ];
 
@@ -50,11 +50,10 @@ function Navbar({ darkMode, toggleDarkMode }) {
               <Link
                 key={path}
                 to={path}
-                className={`flex items-center space-x-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all ${
-                  isActive(path)
+                className={`flex items-center space-x-1.5 px-4 py-2 rounded-full text-sm font-medium transition-all ${isActive(path)
                     ? "bg-blue-500 text-white shadow-lg shadow-blue-500/30"
                     : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                }`}
+                  }`}
               >
                 {Icon && <Icon className="h-4 w-4" />}
                 <span>{label}</span>
@@ -131,11 +130,10 @@ function Navbar({ darkMode, toggleDarkMode }) {
                 key={path}
                 to={path}
                 onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center space-x-2 px-4 py-3 rounded-lg text-sm font-medium transition-all ${
-                  isActive(path)
+                className={`flex items-center space-x-2 px-4 py-3 rounded-lg text-sm font-medium transition-all ${isActive(path)
                     ? "bg-blue-500 text-white"
                     : "text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
-                }`}
+                  }`}
               >
                 {Icon && <Icon className="h-5 w-5" />}
                 <span>{label}</span>
